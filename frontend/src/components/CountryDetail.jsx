@@ -2,8 +2,11 @@ import { useState, useEffect } from "react";
 
 import { getByCode } from "../modules/countries";
 
+
+// @todo - border countries sometimes breaks. depends on data
+
 function CountryDetail(props) {
-  const { code } = props;
+  const { code, onBack } = props;
   const [country, setCountry] = useState();
 
   useEffect(() => {
@@ -11,6 +14,8 @@ function CountryDetail(props) {
       .then((data) => {
         if (data) {
           setCountry(data[0]);
+        } else {
+          console.log('no data')
         }
       })
       .catch((error) => {
@@ -20,7 +25,7 @@ function CountryDetail(props) {
 
   return (
     <div>
-      <button type="button" className="mb-12 px-8 py-3 font-semibold rounded bg-gray-800 text-gray-100 dark:bg-gray-100 dark:text-gray-800">Back</button>
+      <button type="button" className="mb-12 px-8 py-3 font-semibold rounded bg-gray-800 text-gray-100 dark:bg-gray-100 dark:text-gray-800" onClick={onBack}>Back</button>
       {country && (
 
         <div className="md:flex md:gap-24">
@@ -43,7 +48,7 @@ function CountryDetail(props) {
                 <div><span className="font-semibold">Languages: </span>{country.languages}</div>
               </div>
             </div>
-            <div><span className="font-semibold">Borders: </span>{country.borders.join(', ')}</div>
+            {/* <div><span className="font-semibold">Borders: </span>{country.borders.join(', ')}</div> */}
           </div>
         </div>
       )}

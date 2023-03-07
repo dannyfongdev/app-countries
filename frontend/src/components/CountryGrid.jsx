@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react'
 
 import CountryCard from './CountryCard';
-import { getLima, getRegion } from '../modules/countries'
+import { getRegion } from '../modules/countries'
 
 
-function CountryGrid () {
+function CountryGrid (props) {
+  const { onShow } = props;
+
   const [countries, setCountries] = useState();
 
   useEffect(() => {
-    getRegion('asia')
+    getRegion('Americas')
     .then (data => {
       setCountries(data);
     })
@@ -29,6 +31,8 @@ function CountryGrid () {
         population={country.population}
         region={country.region}
         capital={country.capital}
+        onShow={c => onShow(c)}
+        cca3={country.cca3}
       />
     ))}
   

@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 
-from modules.countries_api import get_by_capital, get_by_region, get_by_name, get_country_codes, get_by_code
+from modules.countries_api_local import get_by_capital, get_by_region, get_by_name, get_country_codes, get_by_code
 
 # Create your views here.
+
 def codes(request):
   data = get_country_codes()
   return JsonResponse(data)
