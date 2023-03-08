@@ -20,7 +20,7 @@ def get_by_region(region='Americas'):
 
 
 def get_by_name(name='Peru'):
-    data = [i for i in DATA if i.get('name') and i['name']['common'].upper()==name.upper()]
+    data = [i for i in DATA if i.get('name') and name.upper() in i['name']['common'].upper()]
     return transform_data(data)
 
 
@@ -42,6 +42,8 @@ def transform_data(data):
     simple_list = []
     for item in data:
       simple_list.append(transform_one(item))
+    # sort by name
+    simple_list.sort(key=lambda x: x.get('name'))
     # wrap list into a dictionary, JsonResponse can only take dictionaries
     return { 'list': simple_list }
 
@@ -92,3 +94,5 @@ def transform_native_names(data):
         simple_list.append(item.get('common'))
     separator = ", "
     return separator.join(simple_list)
+
+
