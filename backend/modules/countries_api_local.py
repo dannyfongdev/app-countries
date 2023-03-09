@@ -9,11 +9,7 @@ f = open('modules/all.json', encoding="utf8")
 
 DATA = json.load(f)
 
-
-def get_country_codes():
-    return transform_codes(DATA)
-
-
+# These return a list of objects
 def get_by_region(region='Americas'):
     data = [i for i in DATA if i.get('region')==region]
     return transform_data(data)
@@ -33,6 +29,17 @@ def get_by_code(code='USA'):
 def get_by_capital(capital='Lima'):
     data = [i for i in DATA if i.get('capital') and i['capital'][0]=='Lima']
     return transform_data(data)
+
+'''
+Return object is different than others
+{
+    'PER': 'Peru',
+    'USA': 'United States',
+    ...
+}
+'''
+def get_country_codes():
+    return transform_codes(DATA)
 
 
 # utilities
@@ -66,10 +73,10 @@ def transform_one(item):
 
 
 def transform_codes(data):
-    simple_list = []
+    ret_dict = {}
     for item in data:
-        simple_list.append({item.get('cca3'): item.get('name').get('common')})
-    return { 'list' : simple_list }
+        ret_dict[item.get('cca3')] = item.get('name').get('common')
+    return {'list': ret_dict}
 
 
 def transform_languages(data):

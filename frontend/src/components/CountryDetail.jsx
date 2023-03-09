@@ -6,7 +6,7 @@ import { getByCode } from "../modules/countries";
 // @todo - border countries sometimes breaks. depends on data
 
 function CountryDetail(props) {
-  const { code, onBack } = props;
+  const { code, onBack, countryNames, onGotoBorderCountry} = props;
   const [country, setCountry] = useState();
 
   useEffect(() => {
@@ -21,7 +21,7 @@ function CountryDetail(props) {
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [code]);
 
   return (
     <div>
@@ -48,7 +48,8 @@ function CountryDetail(props) {
                 <div><span className="font-semibold">Languages: </span>{country.languages}</div>
               </div>
             </div>
-            {/* <div><span className="font-semibold">Borders: </span>{country.borders.join(', ')}</div> */}
+         
+            {country.borders && <div className="space-x-3"><span className="font-semibold">Borders: </span>{country.borders.map(bc => <div key={bc} className="inline-block mb-2 py-2 px-6 bg-gray-50 cursor-pointer" onClick={()=>onGotoBorderCountry(bc)}>{countryNames[bc]}</div>)}</div>}
           </div>
         </div>
       )}
